@@ -14,7 +14,7 @@ const w   = width   * 0.10;
 const h   = height  * 0.10; 
 const gap = width   * 0.02;
 const ix  = width   * 0.17;
-const iy  = height  * 0.17;
+const iy  = height  * 0.17; 
 
 const off = width   * 0.015;
 let x, y;
