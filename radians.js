@@ -6,20 +6,18 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-
-const degToRad = (degrees) => {
-  return degrees / 180 * Math.PI;
-};
-
-const randomRange = (min, max) => {
-return Math.random() * (max - min) + min;
-};
+// const degToRad = (degrees) => {
+// return degrees / 180 * Math.PI;
+// };
+// 
+// const randomRange = (min, max) => {
+// return Math.random() * (max - min) + min;
+// };
 
 const sketch = () => {
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
-
     context.fillStyle = '#dddddd';
 
 const cx = width   * 0.5;
@@ -28,7 +26,7 @@ const cy = height  * 0.5;
 const w = width   * 0.01;
 const h = height  * 0.1;
 let x, y; 
-const num = 48;
+const num = 12;
 const  radius = width * 0.3;
 
 for (let i = 0; i < num; i++) {
@@ -41,7 +39,7 @@ for (let i = 0; i < num; i++) {
   context.save();
   context.translate(x, y);
   context.rotate(-angle);
-  context.scale(randon.randomRange(3,1), 1);
+  context.scale(random.range(1,0.1), 1);
 
   context.beginPath();
   context.rect(-w * 0.5, -h * 0.5,  w, h);
