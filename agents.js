@@ -1,14 +1,15 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
+const math = require('canvas-sketch-util/math');
 const settings = {
   dimensions: [ 1080, 1080 ],
   animate: true
 };
 
-const animate = () => {
-console.log('dome');
-requestAnimationFrame(animate);
-};
+// const animate = () => {
+// console.log('dome');
+// requestAnimationFrame(animate);
+// };
 // animate();
 
 const sketch = ({ context, width, height }) => {
@@ -20,14 +21,34 @@ for (let i = 0; i < 40; i++) {
 
   agents.push(new Agent(x,y));
 
-  }
+  } 
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
 
+for (let i = 0; i < agents.length; i++) {
+  const agent = agents[i];
+  for (let j = i + 1; j < agents.length; j++) {
+  const other = agents[j];
+
+  const dist = agent.pos.getDistance(other.pos );
+
+if (dist > 200) continue;
+
+context.lineWidth =math.mapRange(dist, 0, 200,12,1);
+
+  context.beginPath();
+  context.moveTo(agent.pos.x, agent.pos.y);
+  context.lineTo(other.pos.x, other.pos.y);
+  context.stroke();
+
+  }
+}
+
     agents.forEach(agent => {
       agent.update();
       agent.draw(context);
+      agent.bounce(width, height);
     });
 
     // const agentA = new Agent(800, 400);
@@ -44,9 +65,14 @@ class Vector {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    
-  };
   }
+
+  getDistance(v) {
+    const dx = this.x - v.x;
+    const dy = this.y - v.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+}
 
 class Agent {
     constructor(x, y) {
@@ -55,6 +81,11 @@ class Agent {
     this.radius = random.range(4,12);
 
     }
+bounce(width, height) {
+if (this.pos.x <=0 || this.pos.x >=width) this.vel.x *= -1;
+if (this.pos.y <=0 || this.pos.y >=width) this.vel.y *= -1;
+}
+
 
 update() { 
   this.pos.x += this.vel.x;
